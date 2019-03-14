@@ -304,22 +304,22 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.actionOpen_Steel.setFont(font)
         self.actionOpen_Steel.setObjectName("actionOpen_Steel")
-        self.actionUpdate_Steel = QtWidgets.QAction(MainWindow)
+        #self.actionUpdate_Steel = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.actionUpdate_Steel.setFont(font)
-        self.actionUpdate_Steel.setObjectName("actionUpdate_Steel")
+        #self.actionUpdate_Steel.setFont(font)
+        #self.actionUpdate_Steel.setObjectName("actionUpdate_Steel")
         self.actionSave_Steel = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.actionSave_Steel.setFont(font)
-        self.actionSave_Steel.setObjectName("actionSave_Steel")
+        #self.actionSave_Steel.setFont(font)
+        #self.actionSave_Steel.setObjectName("actionSave_Steel")
         self.menuOptions.addAction(self.actionAdd_New_Steel)
         self.menuOptions.addAction(self.actionOpen_Steel)
-        self.menuOptions.addAction(self.actionUpdate_Steel)
-        self.menuOptions.addAction(self.actionSave_Steel)
+        #self.menuOptions.addAction(self.actionUpdate_Steel)
+        #self.menuOptions.addAction(self.actionSave_Steel)
         self.menubar.addAction(self.menuOptions.menuAction())
 
         self.pushButton.clicked.connect(self.exit)
@@ -360,8 +360,8 @@ class Ui_MainWindow(object):
         self.menuOptions.setTitle(_translate("MainWindow", "Options"))
         self.actionAdd_New_Steel.setText(_translate("MainWindow", "Add New Steel"))
         self.actionOpen_Steel.setText(_translate("MainWindow", "Open Steel"))
-        self.actionUpdate_Steel.setText(_translate("MainWindow", "Update Steel"))
-        self.actionSave_Steel.setText(_translate("MainWindow", "Save Steel"))
+        #self.actionUpdate_Steel.setText(_translate("MainWindow", "Update Steel"))
+        #self.actionSave_Steel.setText(_translate("MainWindow", "Save Steel"))
 
     
     def menu(self,action):
@@ -376,8 +376,6 @@ class Ui_MainWindow(object):
             self.addsteel()
 
 
-    def setdetails(self,row):
-        x=9
 
     
 
