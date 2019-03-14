@@ -8,6 +8,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import xlrd
+
+count=0
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -334,15 +337,15 @@ class Ui_MainWindow(object):
         self.label_7.setText(_translate("MainWindow", "ID"))
         self.label_8.setText(_translate("MainWindow", "Chosen Option"))
         self.label_25.setText(_translate("MainWindow", "Zz"))
-        self.label_24.setText(_translate("MainWindow", "Ry"))
-        self.label_23.setText(_translate("MainWindow", "Rz"))
-        self.label_22.setText(_translate("MainWindow", "Iy"))
-        self.label_9.setText(_translate("MainWindow", "TW"))
+        self.label_24.setText(_translate("MainWindow", "Zy"))
+        self.label_23.setText(_translate("MainWindow", "TW"))
+        self.label_22.setText(_translate("MainWindow", "Iz"))
+        self.label_9.setText(_translate("MainWindow", "Iy"))
         self.label_29.setText(_translate("MainWindow", "Zpy"))
-        self.label_30.setText(_translate("MainWindow", "Source"))
-        self.label_28.setText(_translate("MainWindow", "Zpz"))
-        self.label_21.setText(_translate("MainWindow", "Iz"))
-        self.label_27.setText(_translate("MainWindow", "Zy"))
+        self.label_30.setText(_translate("MainWindow", "Zpz"))
+        self.label_28.setText(_translate("MainWindow", "Ry"))
+        self.label_21.setText(_translate("MainWindow", "Rz"))
+        self.label_27.setText(_translate("MainWindow", "Source"))
         self.pushButton.setText(_translate("MainWindow", "Exit Application"))
         self.label.setText(_translate("MainWindow", "Steel Section"))
         self.label_2.setText(_translate("MainWindow", "Designation"))
@@ -350,8 +353,8 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "Area"))
         self.label_3.setText(_translate("MainWindow", "B"))
         self.label_4.setText(_translate("MainWindow", "D"))
-        self.label_19.setText(_translate("MainWindow", "R2"))
-        self.label_18.setText(_translate("MainWindow", "R1"))
+        self.label_19.setText(_translate("MainWindow", "R"))
+        self.label_18.setText(_translate("MainWindow", "R2"))
         self.label_17.setText(_translate("MainWindow", "FlangeSlope"))
         self.label_16.setText(_translate("MainWindow", "T"))
         self.menuOptions.setTitle(_translate("MainWindow", "Options"))
@@ -360,17 +363,51 @@ class Ui_MainWindow(object):
         self.actionUpdate_Steel.setText(_translate("MainWindow", "Update Steel"))
         self.actionSave_Steel.setText(_translate("MainWindow", "Save Steel"))
 
-
+    
     def menu(self,action):
         txt=(action.text())
 
         if txt=='Open Steel':
             self.opensteel()
 
+        if txt=='Add New Steel':
+            global count
+            count=count+1
+            self.addsteel()
+
 
     def setdetails(self,row):
         x=9
 
+    
+
+    def addsteel(self):
+        #print("wscw")
+      
+        book = xlrd.open_workbook('new_sections.xlsx')
+        sheet=book.sheet_by_index(0)
+        list=[]
+        if count<10:
+            #print(count)
+            for i in range(sheet.ncols):
+                list.append(sheet.cell_value(count,i))
+        else:
+            self.showdlg("No Data entries left to be appended !! ")
+            return
+        #print(list)
+        
+        sql="INSERT  INTO Beams (ID,Designation,Mass,Area,D,B,tw,T,FlangeSlope,R1,R2,Iz,Iy,rz,ry,Zz,Zy,Zpz,Zpy,Source) VALUES ('"+str(list[0])+"',\
+             '"+str(list[1])+"', '"+str(list[2])+"', '"+str(list[3])+"', '"+str(list[4])+"', '"+str(list[5])+"',\
+        '"+str(list[6])+"', '"+str(list[7])+"', '"+str(list[8])+"', '"+str(list[9])+"', '"+str(list[10])+"', '"+str(list[11])+"','"+str(list[12])+"','"+str(list[13])+"',\
+          '"+str(list[14])+"','"+str(list[15])+"','"+str(list[16])+"','"+str(list[17])+"','"+str(list[18])+"','"+str(list[19])+"') ;"
+        
+        try:
+            cur=conn.execute(sql)
+            self.showdlg("New Data Entry added Succesfully into Steel sections !!")
+            conn.commit()
+        except:
+            self.showdlg("Error in Operation")
+            conn.rollback()
 
 
     def opensteel(self):
@@ -381,6 +418,7 @@ class Ui_MainWindow(object):
             self.lineEdit_9.setText(steel_chosen)
 
         if steel_chosen=='Angles':
+
             sql="select Designation from Angles"
             angles=[]
             cur=conn.execute(sql)
@@ -394,15 +432,31 @@ class Ui_MainWindow(object):
             sql="select * from Angles where Designation='"+angle_option+"';"
             cur=conn.execute(sql)
             for row in cur:
-                self.setdetails(row)
-                print(len(row))
+                #print((row))
+                self.lineEdit_7.setText(str(row[0]))
+                self.lineEdit_5.setText(str(row[1]))
+                self.lineEdit_4.setText(str(row[2]))
+                self.lineEdit_2.setText(str(row[3]))
+                self.lineEdit_16.setText(str(row[4]))
+                self.lineEdit_14.setText(str(row[5]))
+                self.lineEdit_17.setText(str(row[6]))
+                self.lineEdit_8.setText(str(row[7]))
+                self.lineEdit_3.setText(str(row[8]))
+                self.lineEdit_15.setText(str(row[17]))
 
 
-
-
-
-
-
+                self.lineEdit_26.setText(str(row[9]))
+                self.lineEdit_25.setText(str(row[16]))
+                self.lineEdit_24.setText(str(row[11]))
+                self.lineEdit_23.setText(str(row[12]))
+                self.lineEdit_21.setText(str(row[13]))
+                self.lineEdit_20.setText(str(row[14]))
+                self.lineEdit_19.setText(str(row[15]))
+                self.lineEdit_18.setText(str(row[11]))
+                self.lineEdit_22.setText(str(row[23]))
+                
+                
+    
         elif steel_chosen=='Beams':
             sql="select Designation from Beams"
             beams=[]
@@ -411,8 +465,35 @@ class Ui_MainWindow(object):
                 beams.append(row[0])
 
             beam_option, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Designation from Beams Section",beams,0,False)
-            if ok and beam_option:
+            if ok and beam_option: 
                 self.lineEdit_6.setText(beam_option)
+
+
+            sql="select * from Beams where Designation='"+beam_option+"';"
+            cur=conn.execute(sql)
+            for row in cur:
+                #print((row))
+                self.lineEdit_7.setText(str(row[0]))
+                self.lineEdit_5.setText(str(row[1]))
+                self.lineEdit_4.setText(str(row[2]))
+                self.lineEdit_2.setText(str(row[3]))
+                self.lineEdit_16.setText(str(row[4]))
+                self.lineEdit_14.setText(str(row[5]))
+                self.lineEdit_17.setText(str(row[6]))
+                self.lineEdit_8.setText(str(row[7]))
+                self.lineEdit_3.setText(str(row[8]))
+                self.lineEdit_15.setText(str(row[17]))
+
+
+                self.lineEdit_26.setText(str(row[9]))
+                self.lineEdit_25.setText(str(row[16]))
+                self.lineEdit_24.setText(str(row[11]))
+                self.lineEdit_23.setText(str(row[12]))
+                self.lineEdit_21.setText(str(row[13]))
+                self.lineEdit_20.setText(str(row[14]))
+                self.lineEdit_19.setText(str(row[15]))
+                self.lineEdit_18.setText(str(row[11]))
+                self.lineEdit_22.setText(str(row[19]))
 
 
 
@@ -427,6 +508,34 @@ class Ui_MainWindow(object):
             channel_option, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Designation from Channels Section",channels,0,False)
             if ok and channel_option:
                 self.lineEdit_6.setText(channel_option)
+
+
+            
+            sql="select * from Channels where Designation='"+channel_option+"';"
+            cur=conn.execute(sql)
+            for row in cur:
+                #print(len(row))
+                self.lineEdit_7.setText(str(row[0]))
+                self.lineEdit_5.setText(str(row[1]))
+                self.lineEdit_4.setText(str(row[2]))
+                self.lineEdit_2.setText(str(row[3]))
+                self.lineEdit_16.setText(str(row[4]))
+                self.lineEdit_14.setText(str(row[5]))
+                self.lineEdit_17.setText(str(row[6]))
+                self.lineEdit_8.setText(str(row[7]))
+                self.lineEdit_3.setText(str(row[8]))
+                self.lineEdit_15.setText(str(row[17]))
+
+
+                self.lineEdit_26.setText(str(row[9]))
+                self.lineEdit_25.setText(str(row[16]))
+                self.lineEdit_24.setText(str(row[11]))
+                self.lineEdit_23.setText(str(row[12]))
+                self.lineEdit_21.setText(str(row[13]))
+                self.lineEdit_20.setText(str(row[14]))
+                self.lineEdit_19.setText(str(row[15]))
+                self.lineEdit_18.setText(str(row[11]))
+                self.lineEdit_22.setText(str(row[20]))
 
 
     def exit(self):
@@ -445,6 +554,7 @@ class Ui_MainWindow(object):
 
 
 if __name__ == "__main__":
+
     import sqlite3
     conn = sqlite3.connect('steel_sections.sqlite')
     import sys
