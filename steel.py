@@ -413,7 +413,7 @@ class Ui_MainWindow(object):
 
         steel_chosen, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Steel Section",steels,0,False)
         if ok and steel_chosen:
-            self.lineEdit_9.setText(steel_chosen)
+            self.lineEdit_9.setText(steel_chosen)  
 
         if steel_chosen=='Angles':
 
@@ -461,7 +461,7 @@ class Ui_MainWindow(object):
             cur=conn.execute(sql)
             for row in cur:
                 beams.append(row[0])
-
+            
             beam_option, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Designation from Beams Section",beams,0,False)
             if ok and beam_option: 
                 self.lineEdit_6.setText(beam_option)
