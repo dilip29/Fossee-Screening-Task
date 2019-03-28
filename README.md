@@ -6,7 +6,7 @@
 > This is a Steel Desktop application build in python that allows user to access data of a steel ...see its various types and features
 also add a new steel to the Steel database
 ## TASK
- Displaying the properties of the steel section from the given database.
+ > Displaying the properties of the steel section from the given database.
  Appending properties of new steel section(s) to the current database.
 ---
 
