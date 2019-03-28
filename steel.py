@@ -83,6 +83,7 @@ class Ui_MainWindow(object):
         self.label_29 = QtWidgets.QLabel(self.layoutWidget_2)
         font = QtGui.QFont()
         font.setBold(True)
+        
         font.setWeight(75)
         self.label_29.setFont(font)
         self.label_29.setObjectName("label_29")
