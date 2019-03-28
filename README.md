@@ -103,7 +103,7 @@ pip3 install PyQt5
 ---
 ## Getting Started
 ```
-git clone https://github.com/kalwaniya/fsf_2019_screening_task3/
+git clone https://github.com/dilip29/fsf_2019_screening_task3/
 ```
 * install the required tools 
 
