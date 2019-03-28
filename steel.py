@@ -83,7 +83,7 @@ class Ui_MainWindow(object):
         self.label_29 = QtWidgets.QLabel(self.layoutWidget_2)
         font = QtGui.QFont()
         font.setBold(True)
-        
+
         font.setWeight(75)
         self.label_29.setFont(font)
         self.label_29.setObjectName("label_29")
@@ -359,7 +359,7 @@ class Ui_MainWindow(object):
         self.label_17.setText(_translate("MainWindow", "FlangeSlope"))
         self.label_16.setText(_translate("MainWindow", "T"))
         self.menuOptions.setTitle(_translate("MainWindow", "Options"))
-        self.actionAdd_New_Steel.setText(_translate("MainWindow", "Add New Steel"))
+        self.actionAdd_New_Steel.setText(_translate("MainWindow", "Add New Data"))
         self.actionOpen_Steel.setText(_translate("MainWindow", "Open Steel"))
         #self.actionUpdate_Steel.setText(_translate("MainWindow", "Update Steel"))
         #self.actionSave_Steel.setText(_translate("MainWindow", "Save Steel"))
@@ -371,7 +371,7 @@ class Ui_MainWindow(object):
         if txt=='Open Steel':
             self.opensteel()
 
-        if txt=='Add New Steel':
+        if txt=='Add New Data':
             global count
             count=count+1
             self.addsteel()
@@ -382,31 +382,131 @@ class Ui_MainWindow(object):
 
     def addsteel(self):
         #print("wscw")
-      
-        book = xlrd.open_workbook('new_sections.xlsx')
-        sheet=book.sheet_by_index(0)
-        list=[]
-        if count<10:
-            #print(count)
-            for i in range(sheet.ncols):
-                list.append(sheet.cell_value(count,i))
+        steels=["Angles","Beams","Channels"]
+
+        steel_chosen, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Steel Section to add Data",steels,0,False)
+        if ok and steel_chosen:
+            a=1   
         else:
-            self.showdlg("No Data entries left to be appended !! ")
             return
-        #print(list)
+
+
+        if steel_chosen=="Angles":
+            sheet_no=1
+        elif steel_chosen=="Beams":
+            sheet_no=0
+        else:
+            sheet_no=2
+
+
+        book = xlrd.open_workbook('new_sections.xlsx')
+        sheet=book.sheet_by_index(sheet_no)
+        list=[]
+        for i in range(1,sheet.nrows):
+            list.append(str(sheet.cell_value(i,0)))
         
-        sql="INSERT  INTO Beams (ID,Designation,Mass,Area,D,B,tw,T,FlangeSlope,R1,R2,Iz,Iy,rz,ry,Zz,Zy,Zpz,Zpy,Source) VALUES ('"+str(list[0])+"',\
-             '"+str(list[1])+"', '"+str(list[2])+"', '"+str(list[3])+"', '"+str(list[4])+"', '"+str(list[5])+"',\
-        '"+str(list[6])+"', '"+str(list[7])+"', '"+str(list[8])+"', '"+str(list[9])+"', '"+str(list[10])+"', '"+str(list[11])+"','"+str(list[12])+"','"+str(list[13])+"',\
-          '"+str(list[14])+"','"+str(list[15])+"','"+str(list[16])+"','"+str(list[17])+"','"+str(list[18])+"','"+str(list[19])+"') ;"
+        id_chosen, ok=QtWidgets.QInputDialog.getItem(MainWindow,steel_chosen,'Choose a "ID" to be added',list,0,False)
+        if ok and id_chosen:
+            a=1   
+        else:
+            return
+
+
         
-        try:
-            cur=conn.execute(sql)
-            self.showdlg("New Data Entry added Succesfully into Steel sections !!")
-            conn.commit()
-        except:
-            self.showdlg("Error in Operation")
-            conn.rollback()
+        ID_list=[]
+        sql="SELECT ID from "+steel_chosen+";"
+        cur=conn.execute(sql)
+        for row in cur:
+            ID_list.append(row[0])
+
+        
+        list=[]
+       
+        if steel_chosen=='Beams':
+            if int(float(id_chosen)) not in ID_list:
+                for i in range(sheet.nrows):
+                    if sheet.cell_value(i,0)==int(float(id_chosen)):
+                        for j in range(sheet.ncols):
+                            list.append(sheet.cell_value(i,j))
+
+                sql="INSERT  INTO Beams (ID,Designation,Mass,Area,D,B,tw,T,FlangeSlope,R1,R2,Iz,Iy,rz,ry,Zz,Zy,Zpz,Zpy,Source) VALUES ('"+str(list[0])+"',\
+                    '"+str(list[1])+"', '"+str(list[2])+"', '"+str(list[3])+"', '"+str(list[4])+"', '"+str(list[5])+"',\
+                '"+str(list[6])+"', '"+str(list[7])+"', '"+str(list[8])+"', '"+str(list[9])+"', '"+str(list[10])+"', '"+str(list[11])+"','"+str(list[12])+"','"+str(list[13])+"',\
+                '"+str(list[14])+"','"+str(list[15])+"','"+str(list[16])+"','"+str(list[17])+"','"+str(list[18])+"','"+str(list[19])+"') ;"
+                
+                
+                try:
+                    cur=conn.execute(sql)
+                    self.showdlg("New Data Entry added Succesfully into Beams sections !!")
+                    conn.commit()
+                except:
+                    self.showdlg("Error in Operation")
+                    conn.rollback()
+
+            else:
+                
+                self.showdlg("Data with similar ID already exits ....Not Allowed (Primary Key) ")
+                return
+
+
+        if steel_chosen=='Angles':
+            
+            if int(float(id_chosen)) not in ID_list:
+                for i in range(sheet.nrows):
+                    if sheet.cell_value(i,0)==int(float(id_chosen)):
+                        for j in range(sheet.ncols):
+                            list.append(sheet.cell_value(i,j))
+                
+                
+                sql="INSERT  INTO Angles (ID,Designation,Mass,Area,AXB,t,R1,R2,Cz,Cy,'Tan?',Iz,Iy,'Iu(max)','Iv(min)',rz,ry,'ru(max)','rv(min)',Zz,Zy,Zpz,Zpy,Source) VALUES ('"+str(list[0])+"',\
+                    '"+str(list[1])+"', '"+str(list[2])+"', '"+str(list[3])+"', '"+str(list[4])+"', '"+str(list[5])+"',\
+                '"+str(list[6])+"', '"+str(list[7])+"', '"+str(list[8])+"', '"+str(list[9])+"', '"+str(list[10])+"', '"+str(list[11])+"','"+str(list[12])+"','"+str(list[13])+"',\
+                '"+str(list[14])+"','"+str(list[15])+"','"+str(list[16])+"','"+str(list[17])+"','"+str(list[18])+"','"+str(list[19])+"','"+str(list[20])+"','"+str(list[21])+"',\
+                    '"+str(list[22])+"','"+str(list[23])+"') ;"
+                
+                
+                try:
+                    cur=conn.execute(sql)
+                    self.showdlg("New Data Entry added Succesfully into Angles sections !!")
+                    conn.commit()
+                except:
+                    self.showdlg("Error in Operation")
+                    conn.rollback()
+                
+            else:
+                
+                self.showdlg("Data with similar ID already exits ....Not Allowed (Primary Key) ")
+                return
+
+        if steel_chosen=='Channels':
+            if int(float(id_chosen)) not in ID_list:
+                for i in range(sheet.nrows):
+                    if sheet.cell_value(i,0)==int(float(id_chosen)):
+                        for j in range(sheet.ncols):
+                            list.append(sheet.cell_value(i,j))
+
+                sql="INSERT  INTO Channels (ID,Designation,Mass,Area,D,B,tw,T,FlangeSlope,R1,R2,Cy,Iz,Iy,rz,ry,Zz,Zy,Zpz,Zpy,Source) VALUES ('"+str(list[0])+"',\
+                    '"+str(list[1])+"', '"+str(list[2])+"', '"+str(list[3])+"', '"+str(list[4])+"', '"+str(list[5])+"',\
+                '"+str(list[6])+"', '"+str(list[7])+"', '"+str(list[8])+"', '"+str(list[9])+"', '"+str(list[10])+"', '"+str(list[11])+"','"+str(list[12])+"','"+str(list[13])+"',\
+                '"+str(list[14])+"','"+str(list[15])+"','"+str(list[16])+"','"+str(list[17])+"','"+str(list[18])+"','"+str(list[19])+"','"+str(list[20])+"') ;"
+                
+                
+                
+                cur=conn.execute(sql)
+                self.showdlg("New Data Entry added Succesfully into Channels sections !!")
+                conn.commit()
+                '''
+                    self.showdlg("Error in Operation")
+                    conn.rollback()
+                '''
+            else:
+                
+                self.showdlg("Data with similar ID already exits ....Not Allowed (Primary Key) ")
+                return
+
+        
+        
+
 
 
     def opensteel(self):
@@ -414,7 +514,11 @@ class Ui_MainWindow(object):
 
         steel_chosen, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Steel Section",steels,0,False)
         if ok and steel_chosen:
-            self.lineEdit_9.setText(steel_chosen)  
+            a=1
+            
+        else:
+            return
+        self.lineEdit_9.setText(steel_chosen)
 
         if steel_chosen=='Angles':
 
@@ -426,7 +530,12 @@ class Ui_MainWindow(object):
 
             angle_option, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Designation from Angles Section",angles,0,False)
             if ok and angle_option:
-                self.lineEdit_6.setText(angle_option)
+                a=1
+                
+            else:
+                self.lineEdit_9.setText("")
+                return
+            self.lineEdit_6.setText(angle_option)
 
             sql="select * from Angles where Designation='"+angle_option+"';"
             cur=conn.execute(sql)
@@ -465,8 +574,11 @@ class Ui_MainWindow(object):
             
             beam_option, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Designation from Beams Section",beams,0,False)
             if ok and beam_option: 
-                self.lineEdit_6.setText(beam_option)
-
+                a=1
+            else:
+                self.lineEdit_9.setText("")
+                return
+            self.lineEdit_6.setText(beam_option)
 
             sql="select * from Beams where Designation='"+beam_option+"';"
             cur=conn.execute(sql)
@@ -506,9 +618,12 @@ class Ui_MainWindow(object):
 
             channel_option, ok=QtWidgets.QInputDialog.getItem(MainWindow,"Steel","Choose a Designation from Channels Section",channels,0,False)
             if ok and channel_option:
-                self.lineEdit_6.setText(channel_option)
-
-
+                #self.lineEdit_6.setText(channel_option)
+                a=1
+            else:
+                self.lineEdit_9.setText("")
+                return
+            self.lineEdit_6.setText(channel_option)
             
             sql="select * from Channels where Designation='"+channel_option+"';"
             cur=conn.execute(sql)
