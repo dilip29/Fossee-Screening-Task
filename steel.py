@@ -305,12 +305,12 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.actionOpen_Steel.setFont(font)
         self.actionOpen_Steel.setObjectName("actionOpen_Steel")
-        #self.actionUpdate_Steel = QtWidgets.QAction(MainWindow)
+        self.actionClear_Up = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        #self.actionUpdate_Steel.setFont(font)
-        #self.actionUpdate_Steel.setObjectName("actionUpdate_Steel")
+        self.actionClear_Up.setFont(font)
+        self.actionClear_Up.setObjectName("actionClear_Up")
         self.actionSave_Steel = QtWidgets.QAction(MainWindow)
         font = QtGui.QFont()
         font.setBold(True)
@@ -319,7 +319,7 @@ class Ui_MainWindow(object):
         #self.actionSave_Steel.setObjectName("actionSave_Steel")
         self.menuOptions.addAction(self.actionAdd_New_Steel)
         self.menuOptions.addAction(self.actionOpen_Steel)
-        #self.menuOptions.addAction(self.actionUpdate_Steel)
+        self.menuOptions.addAction(self.actionClear_Up)
         #self.menuOptions.addAction(self.actionSave_Steel)
         self.menubar.addAction(self.menuOptions.menuAction())
 
@@ -361,7 +361,7 @@ class Ui_MainWindow(object):
         self.menuOptions.setTitle(_translate("MainWindow", "Options"))
         self.actionAdd_New_Steel.setText(_translate("MainWindow", "Add New Data"))
         self.actionOpen_Steel.setText(_translate("MainWindow", "Open Steel"))
-        #self.actionUpdate_Steel.setText(_translate("MainWindow", "Update Steel"))
+        self.actionClear_Up.setText(_translate("MainWindow", "Clear Up"))
         #self.actionSave_Steel.setText(_translate("MainWindow", "Save Steel"))
 
     
@@ -376,9 +376,41 @@ class Ui_MainWindow(object):
             count=count+1
             self.addsteel()
 
+        if txt=='Clear Up':
+            self.clearsteel()
 
 
-    
+
+
+    def clearsteel(self):
+        self.lineEdit_6.setText(str(""))
+        self.lineEdit_9.setText(str(""))
+
+        self.lineEdit_7.setText(str(""))
+        self.lineEdit_5.setText(str(""))
+        
+        self.lineEdit_4.setText(str(""))
+        self.lineEdit_2.setText(str(""))
+        self.lineEdit_16.setText(str(""))
+        self.lineEdit_14.setText(str(""))
+        self.lineEdit_17.setText(str(""))
+        self.lineEdit_8.setText(str(""))
+        self.lineEdit_3.setText(str(""))
+        self.lineEdit_15.setText(str(""))
+
+
+        self.lineEdit_26.setText(str(""))
+        self.lineEdit_25.setText(str(""))
+        self.lineEdit_24.setText(str(""))
+        self.lineEdit_24.setText(str(""))
+        self.lineEdit_23.setText(str(""))
+        self.lineEdit_21.setText(str(""))
+        self.lineEdit_20.setText(str(""))
+        self.lineEdit_19.setText(str(""))
+        self.lineEdit_18.setText(str(""))
+        self.lineEdit_22.setText(str(""))
+
+        
 
     def addsteel(self):
         #print("wscw")
