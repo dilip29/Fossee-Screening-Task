@@ -15,11 +15,11 @@ also add a new steel to the Steel database
 You're sections headers will be used to reference location of destination.
 
 - [Description](#description)
+- [How to use](#how-to-use)
 - [Use of Badges](#use-of-badges)
 - [Features](#features)
 - [Installation](#installation)
 - [Code Snippet](#code-snippet)
-- [Getting Started](#getting-started)
 - [Tools](#tools)
 
 
@@ -31,7 +31,7 @@ You're sections headers will be used to reference location of destination.
 
 
 ---
-## Getting Started
+## How to Use
 ```
 git clone https://github.com/dilip29/fsf_2019_screening_task3/
 ```
