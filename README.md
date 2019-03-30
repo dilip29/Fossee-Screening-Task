@@ -31,19 +31,23 @@ You're sections headers will be used to reference location of destination.
 
 
 ---
-## How to Use
-```
-git clone https://github.com/dilip29/fsf_2019_screening_task3/
-```
-* install the required tools 
 
-* fork or download the repo 
+## Run Setup
+* Click on the drive link https://drive.google.com/open?id=11Oc9WW46NQdwIQxk0StbKs3ldKyl0m3r
+* Download the setup folder
+* Open the setup folder and Run the setup.exe file
+* Hurray !! ...you are done...Enjoy the application
 
-* run the following command in terminal
 
-```
-python3 steel.py
-```
+
+
+## Installer Windows
+* Click on the drive link https://drive.google.com/open?id=11Oc9WW46NQdwIQxk0StbKs3ldKyl0m3r
+* Download the Installer folder
+* Install the  My Application-0.1-amd64.msi file
+* You are good to go !!! ... Enjoy
+
+
 
 
 ### Use of Badges
