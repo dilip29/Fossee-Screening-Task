@@ -19,7 +19,7 @@ You're sections headers will be used to reference location of destination.
 - [Installer Windows](#installer-windows)
 - [Use of Badges](#use-of-badges)
 - [Features](#features)
-- [Installation](#installation)
+- [Tools Installation](#installation)
 - [Code Snippet](#code-snippet)
 - [Tools](#tools)
 
@@ -76,18 +76,18 @@ You're sections headers will be used to reference location of destination.
 
 
 
-## Installation
+## Tools Installation
 * install `PyQt5` python library using pip
-```python
-pip install PyQt5
-
-```
-or
 ```python
 pip3 install PyQt5
 
 ```
-* Install SqliteStudio for creating database for the `Angles` , `Beams` , `Channels`
+* install `xlrd` library using pip
+```python
+pip3 install xlrd
+
+```
+* Install SqliteStudio accessing database "Steel_section.sqlite"
 
 - Download Sqlite Studio - [Sqlitestudio](https://sqlitestudio.pl/index.rvt)
 
