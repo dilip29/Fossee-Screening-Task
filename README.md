@@ -31,6 +31,20 @@ You're sections headers will be used to reference location of destination.
 
 
 ---
+## Getting Started
+```
+git clone https://github.com/dilip29/fsf_2019_screening_task3/
+```
+* install the required tools 
+
+* fork or download the repo 
+
+* run the following command in terminal
+
+```
+python3 steel.py
+```
+
 
 ### Use of Badges
 
@@ -101,19 +115,6 @@ pip3 install PyQt5
 
 
 ---
-## Getting Started
-```
-git clone https://github.com/dilip29/fsf_2019_screening_task3/
-```
-* install the required tools 
-
-* fork or download the repo 
-
-* run the following command in terminal
-
-```
-python3 steel.py
-```
 
 
 ![steel3](https://user-images.githubusercontent.com/40792388/54923730-df023880-4f30-11e9-9359-fa412884a033.gif)
