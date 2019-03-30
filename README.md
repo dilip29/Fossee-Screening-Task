@@ -15,7 +15,8 @@ also add a new steel to the Steel database
 You're sections headers will be used to reference location of destination.
 
 - [Description](#description)
-- [How to use](#how-to-use)
+- [Run Setup](#run-setup)
+- [Installer Windows](#installer-windows)
 - [Use of Badges](#use-of-badges)
 - [Features](#features)
 - [Installation](#installation)
