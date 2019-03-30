@@ -16,7 +16,7 @@ You're sections headers will be used to reference location of destination.
 
 - [Description](#description)
 - [Run Setup](#run-setup)
-- [Installer Windows](#installer-windows)
+- [Installer for Windows](#installer-for-windows)
 - [Use of Badges](#use-of-badges)
 - [Features](#features)
 - [Tools Installation](#tools-installation)
@@ -42,7 +42,7 @@ You're sections headers will be used to reference location of destination.
 
 
 
-## Installer Windows
+## Installer for Windows
 * Click on the drive link https://drive.google.com/open?id=11Oc9WW46NQdwIQxk0StbKs3ldKyl0m3r
 * Download the Installer folder
 * Install the  My Application-0.1-amd64.msi file
