@@ -19,7 +19,7 @@ You're sections headers will be used to reference location of destination.
 - [Installer Windows](#installer-windows)
 - [Use of Badges](#use-of-badges)
 - [Features](#features)
-- [Tools Installation](#installation)
+- [Tools Installation](#tools-installation)
 - [Code Snippet](#code-snippet)
 - [Tools](#tools)
 
